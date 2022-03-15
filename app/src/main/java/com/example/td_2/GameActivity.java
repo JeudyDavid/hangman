@@ -79,8 +79,10 @@ public class GameActivity extends AppCompatActivity {
         // get the tap letter
         Button mButton = (Button) theView;
         String letter = mButton.getText().toString();
+        letter = letter.toLowerCase();
+        chosenWord = chosenWord.toLowerCase();
+        Log.d("testage", letter);
 
-        Log.d("test",chosenWord);
 //        System.out.println(chosenWord);
 //        System.out.println(letter);
 
