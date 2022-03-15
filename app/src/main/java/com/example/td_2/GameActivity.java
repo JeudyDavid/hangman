@@ -3,6 +3,7 @@ package com.example.td_2;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -79,8 +80,9 @@ public class GameActivity extends AppCompatActivity {
         Button mButton = (Button) theView;
         String letter = mButton.getText().toString();
 
-        System.out.println(chosenWord);
-        System.out.println(letter);
+        Log.d("test",chosenWord);
+//        System.out.println(chosenWord);
+//        System.out.println(letter);
 
         // The following condition will fail sometimes, because of the case. Make sure your convert both <chosenWord> and <letter> to lower or uppercase.
         if(chosenWord.contains(letter)){
