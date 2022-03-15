@@ -1,4 +1,4 @@
-
+d
 Klone pwojè sa, epi ba li non `hangman`. Ajoute pwojè sa sou Github pa w, mete l prive epi ajoute m pou kolaboratè
 
 ### Men sa w gen pou w korije nan TP sa.
