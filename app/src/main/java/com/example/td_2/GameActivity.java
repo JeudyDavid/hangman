@@ -1,7 +1,13 @@
 package com.example.td_2;
 
+import static java.lang.Math.round;
+
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -12,10 +18,11 @@ import android.widget.Toast;
 import java.util.Random;
 
 public class GameActivity extends AppCompatActivity {
-
+    private GameActivity activity;
     private String[] words = {
-            "Rutshelle", "Fatima", "Bedjine",
-            "Shassy"
+            "Troubleboy","Andybeatz","Bedgine",
+            "Rutshelle","Kadilak","Danola",
+            "Kolonel"
     };
 
     // kantite chans itilizatè a
@@ -38,7 +45,7 @@ public class GameActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
-
+        this.activity = this;
         mChansText = (TextView) findViewById(R.id.chansTv);
         mChansText.setText(chans + " chans");
 
@@ -51,10 +58,20 @@ public class GameActivity extends AppCompatActivity {
         moKache = new char[chosenWord.length()];
 
         // Create underscores based on that length
+        int let = (int) Math.ceil(chosenWord.length() * 0.20);
+        Log.d("let", String.valueOf(let));
+        int j = 1;
         for(int i=0; i< chosenWord.length(); i++){
             moKache[i] = '_';
-        }
+            if(let == 1) {
+                moKache[1] = chosenWord.charAt(let);
+            }
+            if(let == 2) {
+                moKache[1] = chosenWord.charAt(1);
+                moKache[3] = chosenWord.charAt(3);
+            }
 
+        }
         // Set the string to Widget
         mHidText.setText(getDisplayText());
     }
@@ -75,6 +92,26 @@ public class GameActivity extends AppCompatActivity {
         return words[random.nextInt(words.length)];
     }
 
+    public void popup(){
+        AlertDialog.Builder mypopup = new AlertDialog.Builder(activity);
+        mypopup.setTitle("Hangman");
+        mypopup.setMessage("si ou vle rekomanse peze wi");
+        mypopup.setNegativeButton("non", new DialogInterface.OnClickListener() {
+
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                //pass
+            }
+        });
+        mypopup.setPositiveButton("wi", new DialogInterface.OnClickListener(){
+
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                activity.recreate();
+            }
+        });
+        mypopup.show();
+    }
     public void onTapLetter(View theView){
         // get the tap letter
         Button mButton = (Button) theView;
@@ -90,7 +127,7 @@ public class GameActivity extends AppCompatActivity {
         if(chosenWord.contains(letter)){
             // get the index
             int index = chosenWord.indexOf(letter);
-
+            String mh = mHidText.getText().toString();
             // Tanke endèks la >= 0, sa vle di gen lèt la nan <chosenWord> la toujou
             while(index >= 0){
                 // This is just a hack to convert the string to char, since moKache is an array of characters
@@ -98,16 +135,41 @@ public class GameActivity extends AppCompatActivity {
 
                 index = chosenWord.indexOf(letter, index + 1); // DO NOT forget to specify the fromIndex to avoid infinite loop
             }
+            if(chans > 0 && !mh.contains("_")) {
+                Toast.makeText(this, "ou genyen pati sa felisitasyon", Toast.LENGTH_SHORT).show();
+                popup();
+            }
             System.out.println(moKache);
         }else{
+            String mh = mHidText.getText().toString();
             // Minus the total of tries
-            chans -= 1;
+
+//            if(mh.contains("_")) {
+//                Log.d("contenu", "nou  bon sou yo");
+//            }
+            if(chans != 0 && mh.contains("_")) {
+                chans -= 1;
+                Toast.makeText(this, "Lèt ou tape a, pa nan mo a", Toast.LENGTH_SHORT).show();
+            }
+            if(chans == 0 && mh.contains("_")) {
+                Toast.makeText(this, "ou pa genyen pati sa", Toast.LENGTH_SHORT).show();
+                popup();
+            }
+            if(chans > 0 && !mh.contains("_")) {
+                Toast.makeText(this, "ou genyen pati sa felisitasyon", Toast.LENGTH_SHORT).show();
+                popup();
+            }
             mChansText.setText(chans + " chans");
             // Display a short message
-            Toast.makeText(this, "Lèt ou tape a, pa nan mo a", Toast.LENGTH_SHORT).show();
+//            if(chans!=0) {
+//                Toast.makeText(this, "Lèt ou tape a, pa nan mo a", Toast.LENGTH_SHORT).show();
+//            }
         }
 
         // Finally, display the new text.
         mHidText.setText(getDisplayText());
     }
+
+
+
 }
