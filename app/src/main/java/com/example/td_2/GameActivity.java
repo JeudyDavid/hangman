@@ -63,14 +63,13 @@ public class GameActivity extends AppCompatActivity {
         int j = 1;
         for(int i=0; i< chosenWord.length(); i++){
             moKache[i] = '_';
-            if(let == 1) {
-                moKache[1] = chosenWord.charAt(let);
-            }
-            if(let == 2) {
-                moKache[1] = chosenWord.charAt(1);
-                moKache[3] = chosenWord.charAt(3);
-            }
-
+        }
+        //affichage 20% du mot choisi
+        for(int i =0;i < let;i++){
+            int randomInt = random.nextInt(chosenWord.length());
+            char randomChar = chosenWord.charAt(randomInt);
+            int index = chosenWord.indexOf(randomChar);
+            moKache[index] = randomChar;
         }
         // Set the string to Widget
         mHidText.setText(getDisplayText());
