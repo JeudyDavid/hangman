@@ -1,7 +1,9 @@
 package com.example.td_2;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Bundle;
@@ -12,10 +14,12 @@ public class MainActivity extends AppCompatActivity {
     private Button mButton;
 
 
-    @Override
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+
         mButton = (Button) findViewById(R.id.start_game);
 
         View.OnClickListener bClick = new View.OnClickListener(){
@@ -23,8 +27,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v){
 
 
-                Intent gameIntent = new Intent(MainActivity.this,
-                                        GameActivity.class);
+                Intent gameIntent = new Intent(MainActivity.this,  GameActivity.class);
 
                 startActivity(gameIntent);
             }

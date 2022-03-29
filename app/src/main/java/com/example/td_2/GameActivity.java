@@ -2,14 +2,19 @@ package com.example.td_2;
 
 import static java.lang.Math.round;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -18,6 +23,7 @@ import android.widget.Toast;
 import java.util.Random;
 
 public class GameActivity extends AppCompatActivity {
+
     private GameActivity activity;
     private String[] words = {
             "Troubleboy","Andybeatz","Bedgine",
@@ -41,10 +47,13 @@ public class GameActivity extends AppCompatActivity {
     private char[] moKache;
     private static Random random = new Random();
 
-    @Override
+
+    @SuppressLint("RestrictedApi")
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDefaultDisplayHomeAsUpEnabled(true);
         this.activity = this;
         mChansText = (TextView) findViewById(R.id.chansTv);
         mChansText.setText(chans + " chans");
@@ -85,7 +94,25 @@ public class GameActivity extends AppCompatActivity {
 
         return sb.toString();
     }
+    //Menu
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu){
+        MenuInflater inflater = getMenuInflater();
 
+        inflater.inflate(R.menu.menu,menu);
+        return true;
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item){
+        switch (item.getItemId()){
+            case R.id.item0:
+                Toast.makeText(this, "menu", Toast.LENGTH_SHORT).show();
+                return true;
+            default:
+                super.onOptionsItemSelected(item);
+        }
+        return false;
+    }
     // return a random digit between 0 and words length
     public String getRandomWord(){
         return words[random.nextInt(words.length)];
